@@ -37,6 +37,29 @@ Some results:
 
 * It's not really useful to register components. At least I don't see how to make attribute CastleComponentAttribute handled automatically without additional per-class call (which makes using the attribute pointless).
 
-* It's useful only to replace `PropertySections` overrides.
+    So this is possible... but a bit pointless (requires additional call to process `TMyFancyImage` attributes, which mean we could as well just call `RegisterSerializableComponent` explicitly).
+
+    ```pascal
+    [CastleComponent('My Fancy Image')]
+    TMyFancyImage = class(TAnnotatedCastleUserInterface)
+    ...
+    end;
+    ```
+
+* It's useful only to replace `PropertySections` overrides. This works nicely (not implemented detection for now, but we could, in CGE editor).
+
+    ```pascal
+    [CastlePropertySections([])]
+    property ...;
+
+    [CastlePropertySections([psBasic])]
+    property ...;
+
+    [CastlePropertySections([psLayout])]
+    property ...;
+
+    [CastlePropertySections([psBasic, psLayout])]
+    property ...;
+    ```
 
 * Requires FPC 3.3.1.
