@@ -10,6 +10,8 @@ Delphi:
 
 * https://docwiki.embarcadero.com/RADStudio/Sydney/en/Declaring_Custom_Attributes_(RTTI)
 
+Tested with FPC from GitLab latest on 2022-12-06.
+
 Some results:
 
 * FPC has limitations: only published properties may have attributes (not methods, not unpublished properties).
