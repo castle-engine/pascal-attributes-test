@@ -19,6 +19,8 @@ Some results:
     This precludes usage like this for methods:
 
     ```pascal
+    // will not work in FPC -- neither in private nor published sections:
+
     [CastleTest]
     class procedure TestSomethingAutomatic;
 
@@ -29,6 +31,9 @@ Some results:
     This precludes usage to do anything on public properties. Bah, we would not be able to access them anyway I guess since no RTTI, so this makes sense.
 
     ```pascal
+    // will not work in FPC -- attributes are not allowed in non-published sections,
+    // and we cannot declare TCastleColor in published section.
+
     [CastleSerializedVector]
     property Color: TCastleColor read FColor write FColor;
     ```
