@@ -8,8 +8,13 @@ uses SysUtils, Rtti, Classes,
 
 type
   { Register component to be available in CGE editor.
-    This allows to add the component from CGE editor menus,
-    and to (de)serialize the component instances using CastleComponentSerialize. }
+    This makes the component appear in CGE editor "Add ..." menus,
+    so users can easily add it to the design.
+    This also allows to (de)serialize the component instances using CastleComponentSerialize
+    routines.
+
+    Using this attribute can be a better alternative to using RegisterSerializableComponent
+    from "initialization" of the unit, see https://castle-engine.io/custom_components . }
   CastleComponentAttribute = class(TCustomAttribute)
     RegisteredCaption: String;
     constructor Create(const ARegisteredCaption: String);
@@ -28,7 +33,10 @@ begin
 end;
 
 type
-  { Execute given class method as part of automatic tests. }
+  { Execute given class method as part of automatic tests. 
+
+    Using this attribute can be a simpler alternative to create a separate test application
+    (like CGE does now in tests/ subdir). }
   CastleTestAttribute = class(TCustomAttribute)
     constructor Create;
   end;
@@ -39,7 +47,10 @@ begin
 end;
 
 type
-  { Execute given instance method from a context menu on given component from CGE editor. }
+  { Execute given instance method from a context menu on given component from CGE editor.
+
+    Using this attribute is a simpler alternative to adding "verbs" using component editors,
+    see https://castle-engine.io/custom_components#_add_verbs_to_the_context_menu_for_given_component . }
   CastleMenuAttribute = class(TCustomAttribute)
     constructor Create(const MenuItemCaption: String);
   end;
@@ -55,7 +66,13 @@ type
     This effectively makes the vector "published", even though we cannot publish
     the vector types in FPC.
 
-    TODO: Cal this CastlePublishedVector or just CastlePublished?
+    Using this should make it easier to publish TVector*, TCastleColor[RGB].
+    Right now (without this attribute) publishing these records requires some boilerplate code, 
+    as we cannot actually publish records,
+    and have to introduce wrapper classes -- only for editor and serialization.
+    See https://castle-engine.io/custom_components#_publishing_vectors_and_colors .
+
+    TODO: Call this CastlePublishedVector or just CastlePublished?
 
     TODO: How to limit what can be influenced by this atrribute?
     Only properties, only of vector types. }
@@ -69,7 +86,10 @@ begin
 end;
 
 type
-  { Make the given property available in given property sections in CGE editor. }
+  { Make the given property available in given property sections in CGE editor.
+
+   Using this is a cleaner alternative to override PropertySections,
+   see https://castle-engine.io/custom_components#_property_sections . }
   CastlePropertySectionsAttribute = class(TCustomAttribute)
     constructor Create(const Sections: TPropertySections);
   end;
